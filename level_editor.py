@@ -1,9 +1,10 @@
 import bpy
+import math
 
 # ブレンダーに登録するアドオン情報
 bl_info = {
     "name": "Level Editor",
-    "author": "Taro Kamata",
+    "author": "Yuya Kojima",
     "version": (1, 0),
     "blender": (3, 3, 1),
     "location": "",
@@ -43,6 +44,47 @@ class MYADDON_OT_create_ico_sphere(bpy.types.Operator):
         print("ICO球を生成しました。")
 
         return {'FINISHED'}
+    
+# オペレータ シーン出力
+class MYADDON_OT_export_scene(bpy.types.Operator):
+    bl_idname = "myaddon.myaddon_ot_export_scene"
+    bl_label = "シーン出力"
+    bl_description = "シーン情報をExportします"
+
+    def execute(self, context):
+        print("シーン情報をExportします")
+
+        # 【変更点】シーン内の全オブジェクトについてループを回す
+        for object in bpy.context.scene.objects:
+            # オブジェクトの種類（type）と、名前（name）を文字連結して表示
+            print(object.type + " - " + object.name)
+
+            # ローカルトランスフォーム行列から平行移動、回転、スケーリングを抽出
+            trans, rot, scale = object.matrix_local.decompose()
+            # 回転を Quaternion から Euler（3軸での回転角）に変換
+            rot = rot.to_euler()
+            # ラジアンから度数法に変換
+            rot.x = math.degrees(rot.x)
+            rot.y = math.degrees(rot.y)
+            rot.z = math.degrees(rot.z)
+        
+            # トランスフォーム情報を表示
+            print("Trans(%f,%f,%f)" % (trans.x, trans.y, trans.z))
+            print("Rot(%f,%f,%f)" % (rot.x, rot.y, rot.z))
+            print("Scale(%f,%f,%f)" % (scale.x, scale.y, scale.z))
+        
+            # 親オブジェクトの名前を表示
+            if object.parent:
+                print("Parent:" + object.parent.name)
+            print() # 次のオブジェクトとの区切りのための空行
+
+
+        print("シーン情報をExportしました")
+        self.report({'INFO'}, "シーン情報をExportしました")
+
+        return {'FINISHED'}
+
+
 
 # トップバーの拡張メニュー
 class TOPBAR_MT_my_menu(bpy.types.Menu):
@@ -67,6 +109,10 @@ class TOPBAR_MT_my_menu(bpy.types.Menu):
         # ICO球生成を追加
         self.layout.operator(MYADDON_OT_create_ico_sphere.bl_idname, text=MYADDON_OT_create_ico_sphere.bl_label)
 
+        #シーン出力
+        self.layout.operator(MYADDON_OT_export_scene.bl_idname,
+            text=MYADDON_OT_export_scene.bl_label)
+
     # 既存のメニューにサブメニューを追加
     def submenu(self, context):
         
@@ -77,6 +123,7 @@ class TOPBAR_MT_my_menu(bpy.types.Menu):
 classes = (
     MYADDON_OT_stretch_vertex,
     MYADDON_OT_create_ico_sphere,
+    MYADDON_OT_export_scene,
     TOPBAR_MT_my_menu,
 )
 
