@@ -14,7 +14,8 @@ class TOPBAR_MT_my_menu(bpy.types.Menu):
         self.layout.operator(MYADDON_OT_stretch_vertex.bl_idname, text=MYADDON_OT_stretch_vertex.bl_label)
         self.layout.operator(MYADDON_OT_create_ico_sphere.bl_idname, text=MYADDON_OT_create_ico_sphere.bl_label)
         self.layout.operator(MYADDON_OT_export_scene.bl_idname, text=MYADDON_OT_export_scene.bl_label)
-        self.layout.operator("myaddon.myaddon_ot_spawn_create_symbol")
+        self.layout.operator("myaddon.myaddon_ot_spawn_create_enemy_symbol", text="敵出現ポイントシンボルの作成")
+        self.layout.operator("myaddon.myaddon_ot_spawn_create_player_symbol", text="プレイヤー出現ポイントシンボルの作成")
 
     def submenu(self, context):
         self.layout.menu(TOPBAR_MT_my_menu.bl_idname)

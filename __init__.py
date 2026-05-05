@@ -27,8 +27,9 @@ from .collider import OBJECT_PT_collider
 from .my_menu import TOPBAR_MT_my_menu
 from .draw_collider import DrawCollider
 from .disabled import MYADDON_OT_add_disabled, OBJECT_PT_disabled
-from .spawn import MYADDON_OT_spawn_import_symbol
 from .spawn import MYADDON_OT_spawn_create_symbol
+from .spawn import MYADDON_OT_spawn_create_player_symbol
+from .spawn import MYADDON_OT_spawn_create_enemy_symbol
 
 # -----------------
 # Blenderに登録するクラスリスト
@@ -44,8 +45,9 @@ classes = (
     OBJECT_PT_collider,
     MYADDON_OT_add_disabled,
     OBJECT_PT_disabled,
-    MYADDON_OT_spawn_import_symbol,
     MYADDON_OT_spawn_create_symbol,
+    MYADDON_OT_spawn_create_player_symbol,
+    MYADDON_OT_spawn_create_enemy_symbol,
 )
 
 # アドオン有効化時コールバック
