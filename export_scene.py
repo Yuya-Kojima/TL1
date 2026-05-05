@@ -43,8 +43,10 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
 
     def parse_scene_recursive_json(self, data_parent, object, level):
         json_object = dict()
-        json_object["type"] = object.type
-        json_object["name"] = object.name
+        if "type" in object: # カスタムプロパティで指定された場合
+            json_object["type"] = object["type"]
+        else:
+            json_object["type"] = object.type
         trans, rot, scale = object.matrix_local.decompose()
         rot = rot.to_euler()
         rot.x = math.degrees(rot.x)
