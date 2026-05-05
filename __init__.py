@@ -26,6 +26,7 @@ from .file_name import OBJECT_PT_file_name
 from .collider import OBJECT_PT_collider
 from .my_menu import TOPBAR_MT_my_menu
 from .draw_collider import DrawCollider
+from .disabled import MYADDON_OT_add_disabled, OBJECT_PT_disabled
 
 # -----------------
 # Blenderに登録するクラスリスト
@@ -39,6 +40,8 @@ classes = (
     MYADDON_OT_add_filename, 
     MYADDON_OT_add_collider,
     OBJECT_PT_collider,
+    MYADDON_OT_add_disabled,
+    OBJECT_PT_disabled,
 )
 
 # アドオン有効化時コールバック
